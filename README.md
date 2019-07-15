@@ -3,7 +3,7 @@
 #### Introduce
 create webhooks server & generate certificate, this example aim to add default quota values for deployment if the namespace added `resourcequotas`
 
-#### build wehbook
+#### build webhook
 
 - build lb-webhook
 
@@ -41,3 +41,4 @@ kubectl apply -f quota.yaml
 kubectl apply -f test-fail.yaml #this case will fail, because the deployment not include `io.wise2c.service.type` label
 kubectl apply -f test-success.yaml   
 ```
+> https://mustache.github.io/
