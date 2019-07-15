@@ -12,7 +12,7 @@ help: Makefile
 
 .PHONY: ca.key ca.crt server.key server.csr server.crt
 
-root-ca: ca.key ca.crt server-ca clean
+root-ca: ca.key ca.crt server-ca template clean
 
 server-ca: server.key server.csr server.crt
 
@@ -66,6 +66,9 @@ csr.conf:
 	@echo "keyUsage=keyEncipherment,dataEncipherment" >> $@
 	@echo "extendedKeyUsage=serverAuth,clientAuth" >> $@
 	@echo "subjectAltName=@alt_names" >> $@
+
+template:
+	@sh generate.sh
 
 clean:
 	-@rm ca.srl server.csr csr.conf

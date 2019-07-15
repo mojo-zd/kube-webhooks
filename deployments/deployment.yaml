@@ -11,11 +11,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: webhook
-  namespace: wisecloud-agent
+  namespace: default
 subjects:
 - kind: ServiceAccount
   name: webhook
-  namespace: wisecloud-agent
+  namespace: default
 roleRef:
   kind: ClusterRole
   name: webhook
@@ -24,40 +24,35 @@ roleRef:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  labels:
-    io.wise2c.stack: wisecloud-agent
   name: webhook
-  namespace: wisecloud-agent
+  namespace: default
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
     com.wise2c.service: lb-webhook
-    com.wise2c.stack: wisecloud-agent
   name: lb-webhook
-  namespace: wisecloud-agent
+  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
       com.wise2c.service: lb-webhook
-      com.wise2c.stack: wisecloud-agent
   template:
     metadata:
       labels:
         com.wise2c.service: lb-webhook
-        com.wise2c.stack: wisecloud-agent
     spec:
       containers:
-      - image: registry.cn-hangzhou.aliyuncs.com/wise2c-test/lb-webhook:master
+      - image: registry.cn-hangzhou.aliyuncs.com/mojo/lb-webhook:master
         imagePullPolicy: IfNotPresent
         name: lb-webhook
         args:
         - "--memory=100m"
         - "--cpu=200m"
-        - "--tls-cert-file=/etc/certs/tls.crt"
-        - "--tls-private-key-file=/etc/certs/tls.key"
+        - "--tls-cert-file=/etc/certs/server.crt"
+        - "--tls-private-key-file=/etc/certs/server.key"
         volumeMounts:
         - mountPath: /etc/certs
           name: config
@@ -72,9 +67,8 @@ kind: Service
 metadata:
   labels:
     com.wise2c.service: lb-webhook
-    com.wise2c.stack: wisecloud-agent
   name: lb-webhook
-  namespace: wisecloud-agent
+  namespace: default
 spec:
   ports:
   - name: https
@@ -83,4 +77,3 @@ spec:
     targetPort: 443
   selector:
     com.wise2c.service: lb-webhook
-    com.wise2c.stack: wisecloud-agent

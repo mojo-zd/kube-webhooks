@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: web
+  name: web-fail
+  namespace: webhook-demo
+spec:
+  selector:
+    matchLabels:
+      run: web-fail
+  template:
+    metadata:
+      labels:
+        run: web-fail
+    spec:
+      containers:
+        - image: nginx
+          imagePullPolicy: Always
+          name: web
+          ports:
+            - containerPort: 80
+              protocol: TCP

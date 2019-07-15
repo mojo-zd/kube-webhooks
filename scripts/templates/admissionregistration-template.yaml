@@ -1,0 +1,21 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: config
+webhooks:
+- name: lb-webhook.default.svc
+  rules:
+  - apiGroups:
+    - "*"
+    apiVersions:
+    - "*"
+    operations:
+    - CREATE
+    resources:
+    - deployments
+  clientConfig:
+    service:
+      namespace: default
+      name: lb-webhook
+      path: /deployments/mutate
+    caBundle: {{caBundle}}

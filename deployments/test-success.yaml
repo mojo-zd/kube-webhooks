@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: web-success
+    io.wise2c.service.type: lb
+  name: web-success
+  namespace: webhook-demo
+spec:
+  selector:
+    matchLabels:
+      run: web-success
+  template:
+    metadata:
+      labels:
+        run: web-success
+    spec:
+      containers:
+        - image: nginx
+          imagePullPolicy: Always
+          name: web
+          ports:
+            - containerPort: 80
+              protocol: TCP

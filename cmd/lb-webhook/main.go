@@ -7,10 +7,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/mojo-zd/kube-webhooks/pkg"
 	"k8s.io/api/admission/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog"
-	"gitee.com/wisecloud/kube-webhooks/pkg"
 )
 
 // toAdmissionResponse is a helper function to create an AdmissionResponse
