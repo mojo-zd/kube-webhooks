@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"unsafe"
-
-	"github.com/modern-go/reflect2"
+	"github.com/v2pro/plz/reflect2"
 )
 
 // ValDecoder is an internal type registered to cache as needed.
@@ -39,14 +38,6 @@ type ctx struct {
 	prefix   string
 	encoders map[reflect2.Type]ValEncoder
 	decoders map[reflect2.Type]ValDecoder
-}
-
-func (b *ctx) caseSensitive() bool {
-	if b.frozenConfig == nil {
-		// default is case-insensitive
-		return false
-	}
-	return b.frozenConfig.caseSensitive
 }
 
 func (b *ctx) append(prefix string) *ctx {
